@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <math.h>
+#include <BLEDevice.h>
+#include <BLEServer.h>
+#include <BLEUtils.h>
 
 #define SDA_PIN 4
 #define SCL_PIN 5
@@ -91,6 +94,19 @@ void setup() {
 
     last_sample_ms = millis();
     Serial.println("Ready. Do reps.");
+
+    // Initialize BLE
+    BLEDevice::init("BarbellTracker");
+    BLEServer* pServer = BLEDevice::createServer();
+    BLEService* pService = pServer->createService("ae9a0254-c9a3-436e-8133-19453ee0b9d0");
+    pService->start();
+
+    BLEAdvertising* pAdvertising = BLEDevice::getAdvertising();
+    pAdvertising->addServiceUUID(pService->getUUID());
+    pAdvertising->setScanResponse(true);
+    pAdvertising->start();
+
+    Serial.println("BLE advertising as 'BarbellTracker'");
 }
 
 void loop() {
