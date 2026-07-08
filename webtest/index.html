@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BarbellTracker Test</title>
+    <style>
+        body { font-family: sans-serif; padding: 40px; }
+        button { padding: 12px 24px; font-size: 16px; cursor: pointer; }
+        #status { margin-top: 20px; font-size: 18px; }
+        #latest { margin-top: 20px; font-size: 32px; font-weight: bold; color: #2E75B6; }
+        #history { margin-top: 30px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>BarbellTracker</h1>
+    <button id="connect">Connect (accept any device)</button>
+    <div id="status">Not connected</div>
+    <div id="latest">—</div>
+    <div id="history"></div>
+
+    <script>
+        const SERVICE_UUID = "12345678-1234-5678-1234-56789abcdef0";
+        const CHAR_UUID = "abcd1234-5678-1234-5678-1234567890ab";
+        let repCount = 0;
+
+        document.getElementById('connect').addEventListener('click', async () => {
+            try {
+                document.getElementById('status').textContent = 'Requesting device (pick BarbellTracker)…';
+                const device = await navigator.bluetooth.requestDevice({
+                    acceptAllDevices: true,
+                    optionalServices: [SERVICE_UUID]
+                });
+                document.getElementById('status').textContent = `Selected: ${device.name || '(unnamed)'}`;
+                const server = await device.gatt.connect();
+                const service = await server.getPrimaryService(SERVICE_UUID);
+                const characteristic = await service.getCharacteristic(CHAR_UUID);
+                await characteristic.startNotifications();
+                characteristic.addEventListener('characteristicvaluechanged', (event) => {
+                    const view = new DataView(event.target.value.buffer);
+                    const velocity = view.getFloat32(0, true);
+                    repCount++;
+                    document.getElementById('latest').textContent = `${velocity.toFixed(2)} m/s`;
+                    const line = document.createElement('div');
+                    line.textContent = `Rep ${repCount}: ${velocity.toFixed(2)} m/s`;
+                    document.getElementById('history').prepend(line);
+                });
+                device.addEventListener('gattserverdisconnected', () => {
+                    document.getElementById('status').textContent = 'Disconnected';
+                });
+                document.getElementById('status').textContent = 'Connected — do a rep!';
+            } catch (err) {
+                document.getElementById('status').textContent = 'Error: ' + err.message;
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+</html>

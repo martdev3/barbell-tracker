@@ -1,0 +1,11 @@
+## Known limitations
+
+- Velocity readings are approximate (±50%). Accurate VBT requires sensor fusion
+  with complementary filtering, calibrated industrial-grade IMUs, and rotation
+  compensation — beyond the scope of this v1 build.
+- Designed for non-rotational lifts (squat, deadlift, bench). Olympic lifts not
+  supported in this version.
+
+## Future work
+- Implement Madgwick or Mahony filter for full sensor fusion
+- Add gyro-based motion-detection gating to prevent gravity contamination
