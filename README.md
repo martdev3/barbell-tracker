@@ -46,9 +46,9 @@ This is a wireless device that is placed onto a barbell and senses when a rep is
 
 ## Future Work
 - 9-axis IMU (BNO085) upgrade from MPU6050
-- LiPo battery + charging circuit for full wireless operation
+- Use the orientation of the chip to determine the gravitational acceleration vectors to cancel
 - 3D-printed enclosure and bar attachment
-- PCB build with solkdered connections (Planned to be completed by end of 2026)
+- PCB build with soldered connections
 
 ## What I Learned
 - Exponential Moving Average (EMA) can be used to smooth out noise by dictating how fast the response is to movement. This is memory-advantageous, as it only requires 1 float of memory.
