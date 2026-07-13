@@ -1,8 +1,8 @@
 # Barbell Velocity Tracker
 This is a wireless device that is placed onto a barbell and senses when a rep is completed. After the rep is completed, it provides the maximum velocity of the rep. This device is for weight lifters to know when their reps are slowing down, as this is a good way to measure fatigue within a workout.
 
-## Demo
-[link to 30-second YouTube video]
+## Image
+
 
 ## Hardware
 - Materials: ESP32-S3, MPU6050, jumper wires, breadboard, USB type C wire that supports data transmission. 
