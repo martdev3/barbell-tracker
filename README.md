@@ -2,6 +2,7 @@
 This is a wireless device that is placed onto a barbell and senses when a rep is completed. After the rep is completed, it provides the maximum velocity of the rep. This device is for weight lifters to know when their reps are slowing down, as this is a good way to measure fatigue within a workout.
 
 ## Image
+<img width="768" height="1024" alt="618D94D6-9975-4062-84E4-2744F479BF2A_1_105_c" src="https://github.com/user-attachments/assets/4743dca9-1ca3-49aa-8ee4-a9e666cf25f2" />
 
 
 ## Hardware
